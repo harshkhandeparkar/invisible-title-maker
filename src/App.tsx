@@ -1,7 +1,8 @@
 import { createRef, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
-import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64 } from './assets/base64';
+import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
+import { generateBlobs } from './blood_blobs';
 
 function App() {
   const [invisible, setInvisible] = useState('INVISIBLE');
@@ -20,14 +21,21 @@ function App() {
     const svg = svgRef.current;
 
     if (svg) {
+      const initialWidth = svg.getAttribute('width') ?? '90%';
+      svg.setAttribute('height', '900px');
+      svg.setAttribute('width', '1600px');
+
       const saver = new SVGSaver(svg);
       saver.saveAsPNG('title');
+
+      svg.removeAttribute('height');
+      svg.setAttribute('width', initialWidth);
     }
   }
 
   return (
     <div className='main'>
-      <svg width="1600" height="900" viewBox="0 0 1600 900" className='title' ref={svgRef}>
+      <svg width="70%" viewBox="0 0 1600 900" className='title' ref={svgRef}>
         <defs>
           <style type='text/css'>
             {`
@@ -44,9 +52,9 @@ function App() {
           </style>
         </defs>
 
-        <image xlinkHref={BG_B64} width={1600} height={900} />
+        <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" />
         <g>
-          <path id="invisible-path" d="M 0 400 Q 800 300 1600 400" fillOpacity={0} />
+          <path id="invisible-path" d="M 0 400 Q 800 200 1600 400" fillOpacity={0} />
         </g>
         <text
           x="50%"
@@ -83,6 +91,19 @@ function App() {
         >
           {credits}
         </text>
+
+        <g id="splatters" fill="red" style={{ mixBlendMode: 'multiply' }}>
+          <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={(Math.random() - 0.5) * 160} y={(Math.random() - 0.5) * 90 - 50} />
+          <g id="blobs" transform="translate(800, 450)">
+            {generateBlobs(10).map((blob, i) => {
+              return <path
+                key={i}
+                d={blob.path}
+                transform={`translate(${blob.translate[0]}, ${blob.translate[1]}) scale(${blob.scale}) rotate(${blob.rotate})`}
+              />;
+            })}
+          </g>
+        </g>
       </svg>
 
       <div className="inputs">

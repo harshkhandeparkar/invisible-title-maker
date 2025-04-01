@@ -15,8 +15,8 @@ importers:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
       svgsaver-reboot:
-        specifier: ^0.12.0
-        version: 0.12.0
+        specifier: link:/tmp/svgsaver-reboot/
+        version: link:../../../../../../tmp/svgsaver-reboot
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
@@ -980,9 +980,6 @@ packages:
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
-
-  svgsaver-reboot@0.12.0:
-    resolution: {integrity: sha512-bztQP5zrmpyvftWOqykr4J4Bxzidr9LJOw8Ez6WlwC3ptpdzZ9H0FFXLTrOUGBRtzLqNPFRvFt+51906Kui8Gw==}
 
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -1958,8 +1955,6 @@ snapshots:
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
-
-  svgsaver-reboot@0.12.0: {}
 
   to-regex-range@5.0.1:
     dependencies:
