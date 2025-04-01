@@ -10,6 +10,16 @@ function App() {
   const [capitalizeBased, setCapitalizeBased] = useState(true);
   const [credits, setCredits] = useState('Robert Kirkman, Cory Walker, & Ryan Ottley');
   const [capitalizeCredits, setCapitalizeCredits] = useState(false);
+  const [enableSplatter, setEnableSplatter] = useState(false);
+  const [splatterOpacity, setSplatterOpacity] = useState(1);
+
+  const [blobs, setBlobs] = useState(generateBlobs(10));
+  const [centralSplatterTranslate, setCentralSplatterTranslate] = useState([(Math.random() - 0.5) * 160, (Math.random() - 0.5) * 90 - 50]);
+
+  const onRegen = () => {
+    setBlobs(generateBlobs(10));
+    setCentralSplatterTranslate([(Math.random() - 0.5) * 160, (Math.random() - 0.5) * 90 - 50]);
+  }
 
   const svgRef = createRef<SVGSVGElement>();
 
@@ -97,10 +107,10 @@ function App() {
           {capitalizeCredits ? credits.toUpperCase() : credits}
         </text>
 
-        <g id="splatters" fill="red" style={{ mixBlendMode: 'multiply' }}>
-          <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={(Math.random() - 0.5) * 160} y={(Math.random() - 0.5) * 90 - 50} />
+        <g id="splatters" opacity={splatterOpacity} fill="red" style={{ mixBlendMode: 'multiply' }} display={enableSplatter ? 'inherit' : 'none'}>
+          <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={centralSplatterTranslate[0]} y={centralSplatterTranslate[1]} />
           <g id="blobs" transform="translate(800, 450)">
-            {generateBlobs(10).map((blob, i) => {
+            {blobs.map((blob, i) => {
               return <path
                 key={i}
                 d={blob.path}
@@ -130,8 +140,22 @@ function App() {
           } />
         </div>
 
+        <div className="row">
+          <label>Blood Splatter</label>
+          <input type="checkbox" checked={enableSplatter} onClick={
+            () => setEnableSplatter((current) => !current)
+          } />
+
+          <label>Splatter Opacity</label>
+          <input style={{ width: '30%' }} type="range" min={0} max={1} step={0.02} value={splatterOpacity} onInput={(e) => setValue(e, (val) => setSplatterOpacity(parseFloat(val)))} />
+
+          <button onClick={onRegen}>Regenerate Splatter</button>
+        </div>
+
         <button onClick={onDownload} id="dl-btn">Download</button>
       </div>
+
+      <p>Made with sweat & <img src={SPLATTER_B64} height="18px" /> | <a href="https://github.com/harshkhandeparkar/invisible-title-maker">Github</a></p>
     </div>
   )
 }
