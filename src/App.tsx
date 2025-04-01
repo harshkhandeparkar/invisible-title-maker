@@ -6,12 +6,17 @@ import { generateBlobs } from './blood_blobs';
 
 function App() {
   const [invisible, setInvisible] = useState('INVISIBLE');
-  const [based, setBased] = useState('BASED ON THE COMIC BOOK BY');
+  const [based, setBased] = useState('based on the comic book by');
+  const [capitalizeBased, setCapitalizeBased] = useState(true);
   const [credits, setCredits] = useState('Robert Kirkman, Cory Walker, & Ryan Ottley');
+  const [capitalizeCredits, setCapitalizeCredits] = useState(false);
 
   const svgRef = createRef<SVGSVGElement>();
 
-  const setValue = (e: React.FormEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
+  const setValue = (
+    e: React.FormEvent<HTMLInputElement>,
+    setter: (value: string) => void
+  ) => {
     e.preventDefault();
     setter(e.currentTarget.value);
   }
@@ -78,7 +83,7 @@ function App() {
           fontFamily='Futura'
           fontSize={24}
         >
-          {based}
+          {capitalizeBased ? based.toUpperCase() : based}
         </text>
         <text
           x="50%"
@@ -89,7 +94,7 @@ function App() {
           fontFamily='Futura'
           fontSize={32}
         >
-          {credits}
+          {capitalizeCredits ? credits.toUpperCase() : credits}
         </text>
 
         <g id="splatters" fill="red" style={{ mixBlendMode: 'multiply' }}>
@@ -108,9 +113,24 @@ function App() {
 
       <div className="inputs">
         <input value={invisible} onInput={(e) => setValue(e, setInvisible)} />
-        <input value={based} onInput={(e) => setValue(e, setBased)} />
+
+        <div className="row">
+          <input value={based} onInput={(e) => setValue(e, setBased)} />
+          <label>Capitalize</label>
+          <input type="checkbox" checked={capitalizeBased} onClick={
+            () => setCapitalizeBased((current) => !current)
+          } />
+        </div>
+
+        <div className="row">
         <input value={credits} onInput={(e) => setValue(e, setCredits)} />
-        <button onClick={onDownload}>Download</button>
+          <label>Capitalize</label>
+          <input type="checkbox" checked={capitalizeCredits} onClick={
+            () => setCapitalizeCredits((current) => !current)
+          } />
+        </div>
+
+        <button onClick={onDownload} id="dl-btn">Download</button>
       </div>
     </div>
   )

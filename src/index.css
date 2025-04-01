@@ -19,3 +19,17 @@
 	box-shadow: none;
 	outline: none;
 }
+.inputs .row {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.inputs input[type="checkbox"] {
+	width: fit-content;
+}
+
+.inputs #dl-btn {
+	width: 5rem;
+	height: 2rem;
+}
