@@ -65,6 +65,21 @@ function App() {
               }
               `}
           </style>
+
+          <filter id="turbulent-disp">
+            <feTurbulence
+              type="fractalNoise"
+              stitchTiles="stitch"
+              baseFrequency="0.05"
+              numOctaves="2"
+              result="turbulence" />
+            <feDisplacementMap
+              in2="turbulence"
+              in="SourceGraphic"
+              scale="30"
+              xChannelSelector="R"
+              yChannelSelector="G" />
+          </filter>
         </defs>
 
         <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" />
@@ -107,13 +122,14 @@ function App() {
           {capitalizeCredits ? credits.toUpperCase() : credits}
         </text>
 
-        <g id="splatters" opacity={splatterOpacity} fill="red" style={{ mixBlendMode: 'multiply' }} display={enableSplatter ? 'inherit' : 'none'}>
+        <g id="splatters" opacity={splatterOpacity} fill="red" style={{ mixBlendMode: 'multiply', filter: 'url(#displacementFilter)' }} display={enableSplatter ? 'inherit' : 'none'}>
           <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={centralSplatterTranslate[0]} y={centralSplatterTranslate[1]} />
           <g id="blobs" transform="translate(800, 450)">
             {blobs.map((blob, i) => {
               return <path
                 key={i}
                 d={blob.path}
+                style={{ filter: 'url(#turbulent-disp)' }}
                 transform={`translate(${blob.translate[0]}, ${blob.translate[1]}) scale(${blob.scale}) rotate(${blob.rotate})`}
               />;
             })}
@@ -133,7 +149,7 @@ function App() {
         </div>
 
         <div className="row">
-        <input value={credits} onInput={(e) => setValue(e, setCredits)} />
+          <input value={credits} onInput={(e) => setValue(e, setCredits)} />
           <label>Capitalize</label>
           <input type="checkbox" checked={capitalizeCredits} onClick={
             () => setCapitalizeCredits((current) => !current)
