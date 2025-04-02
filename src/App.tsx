@@ -4,6 +4,8 @@ import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 import { BG_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
 import { randomDisplacement } from './blood';
 
+import grad from './assets/gradient.png';
+
 function App() {
   const [invisible, setInvisible] = useState('INVISIBLE');
   const [based, setBased] = useState('based on the comic book by');
@@ -15,6 +17,9 @@ function App() {
 
   const [centralSplatterTranslate, setCentralSplatterTranslate] = useState(randomDisplacement(0, 200));
   const [centralSplatterTranslate2, setCentralSplatterTranslate2] = useState(randomDisplacement(0, 200));
+
+  const [invisibleFontSize, setInvisibleFontSize] = useState(320);
+  const [invisibleDistortion, setInvisibleDistortion] = useState(70);
 
   const onRegen = () => {
     setCentralSplatterTranslate(randomDisplacement(0, 300));
@@ -65,21 +70,6 @@ function App() {
               }
               `}
           </style>
-
-          <filter id="turbulent-disp">
-            <feTurbulence
-              type="fractalNoise"
-              stitchTiles="stitch"
-              baseFrequency="0.05"
-              numOctaves="2"
-              result="turbulence" />
-            <feDisplacementMap
-              in2="turbulence"
-              in="SourceGraphic"
-              scale="30"
-              xChannelSelector="R"
-              yChannelSelector="G" />
-          </filter>
         </defs>
 
         <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" />
@@ -88,16 +78,29 @@ function App() {
         </g>
         <text
           x="50%"
+          y="40%"
           textAnchor='middle'
-          dominantBaseline='middle'
+          dominantBaseline='hanging'
           fill="#fcec01"
           fontFamily='Wood Block CG Regular'
           style={{ fontFamily: 'Wood Block CG Regular' }}
-          fontSize={312}
         >
-          <textPath href="#invisible-path" textAnchor='middle'>
-            {invisible}
-          </textPath>
+          {/* <textPath href="#invisible-path" textAnchor='middle'> */}
+          {
+            invisible.split('').map((char, i, arr) => {
+              // Elliptical arc
+              const b2 = invisibleDistortion ** 2; // Ellipse minor radius
+              const x2 = ((i / (arr.length - 1) - 0.5) * 2) ** 2;
+
+              // Difference in font
+              const y = Math.round(Math.sqrt((1 - x2) * b2));
+
+              const fontSize = invisibleFontSize - y;
+
+              return <tspan fontSize={fontSize} key={i}>{char}</tspan>
+            })
+          }
+          {/* </textPath> */}
         </text>
         <text
           x="50%"
@@ -136,7 +139,7 @@ function App() {
         <div className="row">
           <input value={based} onInput={(e) => setValue(e, setBased)} />
           <label>Capitalize</label>
-          <input type="checkbox" checked={capitalizeBased} onClick={
+          <input type="checkbox" checked={capitalizeBased} onChange={
             () => setCapitalizeBased((current) => !current)
           } />
         </div>
@@ -144,14 +147,14 @@ function App() {
         <div className="row">
           <input value={credits} onInput={(e) => setValue(e, setCredits)} />
           <label>Capitalize</label>
-          <input type="checkbox" checked={capitalizeCredits} onClick={
+          <input type="checkbox" checked={capitalizeCredits} onChange={
             () => setCapitalizeCredits((current) => !current)
           } />
         </div>
 
         <div className="row">
           <label>Blood Splatter</label>
-          <input type="checkbox" checked={enableSplatter} onClick={
+          <input type="checkbox" checked={enableSplatter} onChange={
             () => setEnableSplatter((current) => !current)
           } />
 
