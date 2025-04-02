@@ -1,8 +1,27 @@
 import { createRef, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
-import { BG_B64, BG_TEX1_B64, BG_TEX2_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
+import { BG_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
 import { randomDisplacement } from './blood';
+
+const THEME_MAP = {
+  'invisible': {
+    bg: '#189ff9',
+    text: '#fcec01'
+  },
+  'invisible-dark': {
+    bg: '#189ff9',
+    text: 'black'
+  },
+  'atomeve': {
+    bg: '#eb607a',
+    text: '#f3cad2'
+  },
+  'rexsplode': {
+    bg: '#ba3e1c',
+    text: '#ecf76f'
+  }
+}
 
 function App() {
   const [invisible, setInvisible] = useState('invisible');
@@ -19,6 +38,8 @@ function App() {
   const [invisibleFontSize, setInvisibleFontSize] = useState(400);
   const [invisibleDistortion, setInvisibleDistortion] = useState(0.35);
   const [invisiblePosition, setInvisiblePosition] = useState(33);
+
+  const [theme, setTheme] = useState<keyof typeof THEME_MAP>('invisible');
 
   const onRegen = () => {
     setCentralSplatterTranslate(randomDisplacement(0, 300));
@@ -71,7 +92,7 @@ function App() {
           </style>
         </defs>
         <g>
-          <rect x={0} y={0} width={1600} height={900} fill='#00bcf0' />
+          <rect x={0} y={0} width={1600} height={900} fill={THEME_MAP[theme].bg} />
           <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" style={{ mixBlendMode: 'luminosity' }} opacity={0.5} />
         </g>
 
@@ -83,7 +104,7 @@ function App() {
           y={`${invisiblePosition}%`}
           textAnchor='middle'
           dominantBaseline='hanging'
-          fill="#fcec01"
+          fill={THEME_MAP[theme].text}
           fontFamily='Wood Block CG Regular'
           style={{ fontFamily: 'Wood Block CG Regular' }}
         >
@@ -109,7 +130,7 @@ function App() {
           y="72%"
           textAnchor='middle'
           dominantBaseline='middle'
-          fill="#fcec01"
+          fill={THEME_MAP[theme].text}
           fontFamily='Futura'
           fontSize={24}
         >
@@ -120,7 +141,7 @@ function App() {
           y="80%"
           textAnchor='middle'
           dominantBaseline='middle'
-          fill="#fcec01"
+          fill={THEME_MAP[theme].text}
           fontFamily='Futura'
           fontSize={32}
         >
@@ -182,7 +203,7 @@ function App() {
         <hr style={{ width: '100%' }} />
 
         <div className="row">
-          <div className="col">
+          <div className="col" style={{ width: '50%' }}>
             <div className="row">
               <label>Blood Splatter</label>
               <input type="checkbox" checked={enableSplatter} onChange={
@@ -192,10 +213,26 @@ function App() {
 
             <div className="row">
               <label>Splatter Opacity</label>
-              <input style={{ width: '30%' }} type="range" min={0} max={1} step={0.02} value={splatterOpacity} onInput={(e) => setValue(e, (val) => setSplatterOpacity(parseFloat(val)))} />
+              <input style={{ width: '50%' }} type="range" min={0} max={1} step={0.02} value={splatterOpacity} onInput={(e) => setValue(e, (val) => setSplatterOpacity(parseFloat(val)))} />
             </div>
 
             <button onClick={onRegen}>Regenerate Splatter</button>
+          </div>
+
+          <div className="col">
+            <div className="row">
+              <label>Color Theme</label>
+              <select
+                value={theme}
+                onChange={(e) => setValue(e, setTheme)}
+              >
+                {Object.keys(THEME_MAP).map((theme, i) => {
+                  return <option key={i}>
+                    {theme}
+                  </option>
+                })}
+              </select>
+            </div>
           </div>
         </div>
 
