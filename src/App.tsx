@@ -1,7 +1,7 @@
 import { createRef, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
-import { BG_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
+import { BG_B64, BG_TEX1_B64, BG_TEX2_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
 import { randomDisplacement } from './blood';
 
 function App() {
@@ -70,8 +70,11 @@ function App() {
               `}
           </style>
         </defs>
+        <g>
+          <rect x={0} y={0} width={1600} height={900} fill='#00bcf0' />
+          <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" style={{ mixBlendMode: 'luminosity' }} opacity={0.5} />
+        </g>
 
-        <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" />
         <g>
           <path id="invisible-path" d="M 0 400 Q 800 200 1600 400" fillOpacity={0} />
         </g>
