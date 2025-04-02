@@ -1,8 +1,8 @@
 import { createRef, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
-import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
-import { generateBlobs, randomDisplacement } from './blood_blobs';
+import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
+import { generateBlobs, randomDisplacement } from './blood';
 
 function App() {
   const [invisible, setInvisible] = useState('INVISIBLE');
@@ -15,10 +15,12 @@ function App() {
 
   const [blobs, setBlobs] = useState(generateBlobs(10));
   const [centralSplatterTranslate, setCentralSplatterTranslate] = useState(randomDisplacement(0, 200));
+  const [centralSplatterTranslate2, setCentralSplatterTranslate2] = useState(randomDisplacement(0, 200));
 
   const onRegen = () => {
     setBlobs(generateBlobs(20));
     setCentralSplatterTranslate(randomDisplacement(0, 300));
+    setCentralSplatterTranslate2(randomDisplacement(0, 300));
   }
 
   const svgRef = createRef<SVGSVGElement>();
@@ -124,6 +126,7 @@ function App() {
 
         <g id="splatters" opacity={splatterOpacity} fill="red" style={{ mixBlendMode: 'multiply', filter: 'url(#displacementFilter)' }} display={enableSplatter ? 'inherit' : 'none'}>
           <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={centralSplatterTranslate[0]} y={centralSplatterTranslate[1]} />
+          <image xlinkHref={SPLATTER_B64_2} width="100%" height="100%" x={centralSplatterTranslate2[0]} y={centralSplatterTranslate2[1]} />
           <g id="blobs" transform="translate(800, 450)">
             {blobs.map((blob, i) => {
               return <path
