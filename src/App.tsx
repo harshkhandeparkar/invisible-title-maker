@@ -18,7 +18,7 @@ function App() {
 
   const onRegen = () => {
     setBlobs(generateBlobs(20));
-    setCentralSplatterTranslate(randomDisplacement(0, 100));
+    setCentralSplatterTranslate(randomDisplacement(0, 300));
   }
 
   const svgRef = createRef<SVGSVGElement>();
