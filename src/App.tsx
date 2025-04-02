@@ -2,7 +2,7 @@ import { createRef, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
 import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
-import { generateBlobs } from './blood_blobs';
+import { generateBlobs, randomDisplacement } from './blood_blobs';
 
 function App() {
   const [invisible, setInvisible] = useState('INVISIBLE');
@@ -14,11 +14,11 @@ function App() {
   const [splatterOpacity, setSplatterOpacity] = useState(1);
 
   const [blobs, setBlobs] = useState(generateBlobs(10));
-  const [centralSplatterTranslate, setCentralSplatterTranslate] = useState([(Math.random() - 0.5) * 160, (Math.random() - 0.5) * 90 - 50]);
+  const [centralSplatterTranslate, setCentralSplatterTranslate] = useState(randomDisplacement(0, 200));
 
   const onRegen = () => {
-    setBlobs(generateBlobs(10));
-    setCentralSplatterTranslate([(Math.random() - 0.5) * 160, (Math.random() - 0.5) * 90 - 50]);
+    setBlobs(generateBlobs(20));
+    setCentralSplatterTranslate(randomDisplacement(0, 100));
   }
 
   const svgRef = createRef<SVGSVGElement>();

@@ -8,10 +8,14 @@ const BLOB_PATHS = [
 	'M29.9,0.7C39.3,19.2,47.8,48.4,39.1,55.1C30.3,61.8,4.2,45.9,-16.4,29.4C-37,12.8,-52.2,-4.5,-48.5,-15.1C-44.9,-25.7,-22.4,-29.4,-6.1,-27.5C10.2,-25.5,20.5,-17.7,29.9,0.7Z'
 ]
 
-function randomDisplacement(min: number, max: number): number {
-	return Math.round(
-		min + Math.random() * (max - min)
-	) * Math.sign(Math.random() - 0.5)
+export function randomDisplacement(min: number, max: number): [number, number] {
+	const angle = Math.random() * Math.PI * 2;
+	const dist = min + (max - min) * Math.random();
+
+	const x = Math.round(Math.cos(angle) * dist);
+	const y = Math.round(Math.sin(angle) * dist);
+
+	return [x, y];
 }
 
 export interface IBlobInfo {
@@ -29,7 +33,7 @@ export function generateBlobs(nBlobs: number): IBlobInfo[] {
 		blobs.push({
 			path: BLOB_PATHS[blobType],
 			scale: Math.random() * 1.5,
-			translate: [randomDisplacement(300, 550), randomDisplacement(150, 350)],
+			translate: randomDisplacement(250, 800),
 			rotate: Math.round(Math.random() * 180)
 		})
 	}
