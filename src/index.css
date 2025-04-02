@@ -18,10 +18,16 @@
 	width: 100%;
 	box-shadow: none;
 	outline: none;
+
 }
 .inputs .row {
 	display: flex;
 	align-items: center;
+	gap: 5px;
+}
+.inputs .col {
+	display: flex;
+	flex-direction: column;
 	gap: 5px;
 }
 
