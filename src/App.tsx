@@ -1,5 +1,5 @@
 import { createRef, useEffect, useState } from 'react';
-import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
+import { SVGSaver } from 'svgsaver-reboot';
 
 import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
 import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings, getDistortedFontSize, Theme, THEME_MAP } from './utils';
