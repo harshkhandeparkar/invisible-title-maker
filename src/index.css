@@ -1,7 +1,8 @@
-svg {
+svg#preview {
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
+	width: 60%;
 }
 
 .main {
@@ -84,5 +85,9 @@ svg {
 
 	.inputs .row {
 		flex-wrap: wrap;
+	}
+
+	svg#preview {
+		width: 90%;
 	}
 }
