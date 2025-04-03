@@ -41,9 +41,10 @@ function App() {
   const [capitalizeBased, setCapitalizeBased] = useState(true);
   const [credits, setCredits] = useState('Robert Kirkman, Cory Walker, & Ryan Ottley');
   const [capitalizeCredits, setCapitalizeCredits] = useState(false);
+
   const [enableSplatter, setEnableSplatter] = useState(false);
   const [splatterOpacity, setSplatterOpacity] = useState(1);
-
+  const [fineSplatterRotation, setFineSplatterRotation] = useState(-10 + Math.random() * 20);
   const [centralSplatterTranslate, setCentralSplatterTranslate] = useState(randomDisplacement(0, 200));
   const [centralSplatterTranslate2, setCentralSplatterTranslate2] = useState(randomDisplacement(0, 200));
 
@@ -56,6 +57,7 @@ function App() {
   const onRegen = () => {
     setCentralSplatterTranslate(randomDisplacement(0, 300));
     setCentralSplatterTranslate2(randomDisplacement(150, 400));
+    setFineSplatterRotation(-10 + Math.random() * 20);
   }
 
   const svgRef = createRef<SVGSVGElement>();
@@ -162,7 +164,7 @@ function App() {
 
 
         <g id="splatters" opacity={splatterOpacity} fill="red" style={{ mixBlendMode: 'multiply', filter: 'url(#displacementFilter)' }} display={enableSplatter ? 'inherit' : 'none'}>
-          <image xlinkHref={FINE_SPLATTER_B64} width="100%" fill='red' />
+          <image xlinkHref={FINE_SPLATTER_B64} width="100%" fill='red' transform={`rotate(${fineSplatterRotation})`} style={{transformOrigin: 'center'}} />
           <image xlinkHref={SPLATTER_B64_2} width="100%" height="100%" x={centralSplatterTranslate2[0]} y={centralSplatterTranslate2[1]} />
           <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={centralSplatterTranslate[0]} y={centralSplatterTranslate[1]} />
         </g>
