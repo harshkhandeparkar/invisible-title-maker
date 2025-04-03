@@ -20,6 +20,14 @@ const THEME_MAP = {
   'rexsplode': {
     bg: '#ba3e1c',
     text: '#ecf76f'
+  },
+  'omni-man': {
+    bg: '#e1ebed',
+    text: '#ca4230'
+  },
+  'oliver': {
+    text: '#95b38e',
+    bg: '#9a004f'
   }
 }
 
