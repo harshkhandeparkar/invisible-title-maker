@@ -42,3 +42,14 @@ export function generateSplatterSettings(level: BloodLevel): ISplatterSettings {
 
 export const FINE_SPLATTERS = [FINE_SPLATTER_B64, FINE_SPLATTER_2_B64, FINE_SPLATTER_3_B64];
 export const BIG_SPLATTERS = [SPLATTER_B64, SPLATTER_B64_2, SPLATTER_B64_3];
+
+export function getDistortedFontSize(fontSize: number, distortion: number, charIndex: number, numChars: number): number {
+	// Elliptical arc
+	const b2 = (fontSize * distortion) ** 2; // Ellipse minor radius
+	const x2 = ((charIndex / (numChars - 1) - 0.5) * 2) ** 2;
+
+	// Difference in font
+	const y = Math.round(Math.sqrt((1 - x2) * b2));
+
+	return fontSize - y;
+}

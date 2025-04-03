@@ -2,7 +2,7 @@ import { createRef, useEffect, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
 import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
-import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings } from './utils';
+import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings, getDistortedFontSize } from './utils';
 
 const THEME_MAP = {
   'Invisible': {
@@ -122,14 +122,7 @@ function App() {
         >
           {
             invisible.split('').map((char, i, arr) => {
-              // Elliptical arc
-              const b2 = (invisibleDistortion * invisibleFontSize) ** 2; // Ellipse minor radius
-              const x2 = ((i / (arr.length - 1) - 0.5) * 2) ** 2;
-
-              // Difference in font
-              const y = Math.round(Math.sqrt((1 - x2) * b2));
-
-              const fontSize = invisibleFontSize - y;
+              const fontSize = getDistortedFontSize(invisibleFontSize, invisibleDistortion, i, arr.length);
 
               return <tspan fontSize={fontSize} key={i}>{char}</tspan>
             })
