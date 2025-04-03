@@ -275,7 +275,7 @@ function App() {
         </div>
       </div>
 
-      <p>Made with sweat & <img src={SPLATTER_B64} height="18px" /> | <a href="https://github.com/harshkhandeparkar/invisible-title-maker">Github</a></p>
+      <p>Made with sweat & <img src={SPLATTER_B64} height="18px" /> | <a href="https://github.com/harshkhandeparkar/invisible-title-maker">Github</a> | <a href="https://github.com/harshkhandeparkar/invisible-title-maker?tab=readme-ov-file#credits">Credits</a></p>
     </div>
   )
 }
