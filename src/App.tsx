@@ -225,7 +225,7 @@ function App() {
             </div>
 
             <div className="row">
-              <button onClick={onRegen}>Regenerate Splatter</button>
+              <button onClick={onRegen} className="btn">Regenerate Splatter</button>
             </div>
           </div>
 
@@ -263,7 +263,9 @@ function App() {
 
         <hr style={{ width: '100%' }} />
 
-        <button onClick={onDownload} id="dl-btn">Download</button>
+        <div className="row">
+          <button onClick={onDownload} className="btn">Download</button>
+        </div>
       </div>
 
       <p>Made with sweat & <img src={SPLATTER_B64} height="18px" /> | <a href="https://github.com/harshkhandeparkar/invisible-title-maker">Github</a></p>

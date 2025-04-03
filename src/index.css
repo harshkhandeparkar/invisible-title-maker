@@ -36,9 +36,8 @@
 	width: fit-content;
 }
 
-.inputs #dl-btn {
-	width: 5rem;
-	height: 2rem;
+.inputs .btn {
+	padding: 0.2rem 0.5rem;
 }
 
 .inputs .theme-select-btn {
