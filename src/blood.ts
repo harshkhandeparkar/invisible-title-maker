@@ -1,3 +1,5 @@
+import { FINE_SPLATTER_2_B64, FINE_SPLATTER_3_B64, FINE_SPLATTER_B64, SPLATTER_B64, SPLATTER_B64_2, SPLATTER_B64_3 } from "./assets/base64";
+
 export function randomDisplacement(min: number, max: number): [number, number] {
 	const angle = Math.random() * Math.PI * 2;
 	const dist = min + (max - min) * Math.random();
@@ -7,3 +9,36 @@ export function randomDisplacement(min: number, max: number): [number, number] {
 
 	return [x, y];
 }
+
+export function randomRotation(min: number, max: number): number {
+	return min + Math.random() * (max - min);
+}
+
+export interface ISplatterSettings {
+	bigSplatDisplacements: [number, number][];
+	fineSplatterRotations: number[];
+	bigSplatLevel: number;
+	bigSplatScale: number;
+	fineSplatterLevel: number;
+	fullBlood: boolean;
+}
+
+export type BloodLevel = 1 | 2 | 3 | 4 | 5 | 6;
+export function generateSplatterSettings(level: BloodLevel): ISplatterSettings {
+	const bigSplatDisplacements = new Array(3).fill([0, 0]).map(() => randomDisplacement(0, 500));
+	const fineSplatterRotations = new Array(3).fill(0).map(() => randomRotation(-10, 10));
+
+	const fullBlood = level === 5;
+
+	return {
+		bigSplatDisplacements,
+		fineSplatterRotations,
+		bigSplatLevel: level - 2,
+		bigSplatScale: (level - 1) / 2,
+		fineSplatterLevel: level,
+		fullBlood
+	}
+}
+
+export const FINE_SPLATTERS = [FINE_SPLATTER_B64, FINE_SPLATTER_2_B64, FINE_SPLATTER_3_B64];
+export const BIG_SPLATTERS = [SPLATTER_B64, SPLATTER_B64_2, SPLATTER_B64_3];

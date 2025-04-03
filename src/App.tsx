@@ -1,8 +1,8 @@
-import { createRef, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
-import { BG_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2 } from './assets/base64';
-import { randomDisplacement } from './blood';
+import { BG_B64, FINE_SPLATTER_2_B64, FINE_SPLATTER_3_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2, SPLATTER_B64_3 } from './assets/base64';
+import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings, randomDisplacement, randomRotation } from './blood';
 
 const THEME_MAP = {
   'Invisible': {
@@ -42,23 +42,24 @@ function App() {
   const [credits, setCredits] = useState('Robert Kirkman, Cory Walker, & Ryan Ottley');
   const [capitalizeCredits, setCapitalizeCredits] = useState(false);
 
-  const [enableSplatter, setEnableSplatter] = useState(false);
-  const [splatterOpacity, setSplatterOpacity] = useState(1);
-  const [fineSplatterRotation, setFineSplatterRotation] = useState(-10 + Math.random() * 20);
-  const [centralSplatterTranslate, setCentralSplatterTranslate] = useState(randomDisplacement(0, 200));
-  const [centralSplatterTranslate2, setCentralSplatterTranslate2] = useState(randomDisplacement(0, 200));
-
   const [invisibleFontSize, setInvisibleFontSize] = useState(400);
   const [invisibleDistortion, setInvisibleDistortion] = useState(0.35);
   const [invisiblePosition, setInvisiblePosition] = useState(33);
 
+  const [enableSplatter, setEnableSplatter] = useState(false);
+  const [splatterOpacity, setSplatterOpacity] = useState(1);
+  const [bloodLevel, setBloodLevel] = useState<BloodLevel>(2);
+  const [splatterSettings, setSplatterSettings] = useState(generateSplatterSettings(bloodLevel));
+
   const [theme, setTheme] = useState<keyof typeof THEME_MAP>('Invisible');
 
   const onRegen = () => {
-    setCentralSplatterTranslate(randomDisplacement(0, 300));
-    setCentralSplatterTranslate2(randomDisplacement(150, 400));
-    setFineSplatterRotation(-10 + Math.random() * 20);
+    setSplatterSettings(generateSplatterSettings(bloodLevel));
   }
+
+  useEffect(() => {
+    onRegen();
+  }, [bloodLevel]);
 
   const svgRef = createRef<SVGSVGElement>();
 
@@ -110,9 +111,6 @@ function App() {
           <image xlinkHref={BG_B64} width={1600} height={900} preserveAspectRatio="false" style={{ mixBlendMode: 'luminosity' }} opacity={0.5} />
         </g>
 
-        <g>
-          <path id="invisible-path" d="M 0 400 Q 800 200 1600 400" fillOpacity={0} />
-        </g>
         <text
           x="50%"
           y={`${invisiblePosition}%`}
@@ -122,7 +120,6 @@ function App() {
           fontFamily='Wood Block CG Regular'
           style={{ fontFamily: 'Wood Block CG Regular' }}
         >
-          {/* <textPath href="#invisible-path" textAnchor='middle'> */}
           {
             invisible.split('').map((char, i, arr) => {
               // Elliptical arc
@@ -137,7 +134,6 @@ function App() {
               return <tspan fontSize={fontSize} key={i}>{char}</tspan>
             })
           }
-          {/* </textPath> */}
         </text>
         <text
           x="50%"
@@ -162,11 +158,51 @@ function App() {
           {capitalizeCredits ? credits.toUpperCase() : credits}
         </text>
 
+        <g
+          id="splatters"
+          opacity={splatterOpacity}
+          fill="red"
+          style={{ mixBlendMode: 'multiply' }}
+          display={enableSplatter ? 'inherit' : 'none'}
+        >
+          {
+            FINE_SPLATTERS.map((splatter_img, i) => {
+              return <image
+                key={i}
+                xlinkHref={splatter_img}
+                width="100%"
+                fill='red'
+                transform={`rotate(${splatterSettings.fineSplatterRotations[0]})`}
+                style={{ transformOrigin: 'center' }}
+                visibility={i < splatterSettings.fineSplatterLevel ? 'visible' : 'hidden'}
+              />;
+            })
+          }
 
-        <g id="splatters" opacity={splatterOpacity} fill="red" style={{ mixBlendMode: 'multiply', filter: 'url(#displacementFilter)' }} display={enableSplatter ? 'inherit' : 'none'}>
-          <image xlinkHref={FINE_SPLATTER_B64} width="100%" fill='red' transform={`rotate(${fineSplatterRotation})`} style={{transformOrigin: 'center'}} />
-          <image xlinkHref={SPLATTER_B64_2} width="100%" height="100%" x={centralSplatterTranslate2[0]} y={centralSplatterTranslate2[1]} />
-          <image xlinkHref={SPLATTER_B64} width="100%" height="100%" x={centralSplatterTranslate[0]} y={centralSplatterTranslate[1]} />
+          {
+            BIG_SPLATTERS.map((splatter_img, i) => {
+              return <image
+                xlinkHref={splatter_img}
+                width="100%"
+                height="100%"
+                x={splatterSettings.bigSplatDisplacements[i][0]}
+                y={splatterSettings.bigSplatDisplacements[i][1]}
+                visibility={i < splatterSettings.bigSplatLevel ? 'visible' : 'hidden'}
+                transform={`scale(${splatterSettings.bigSplatScale})`}
+                style={{ transformOrigin: 'center' }}
+              />;
+            })
+          }
+
+          {
+            splatterSettings.fullBlood && <rect
+              fill='red'
+              width={1600}
+              height={900}
+              x={0}
+              y={0}
+            />
+          }
         </g>
       </svg>
 
@@ -223,6 +259,11 @@ function App() {
               <input type="checkbox" checked={enableSplatter} onChange={
                 () => setEnableSplatter((current) => !current)
               } />
+            </div>
+
+            <div className="row">
+              <label>Blood Level</label>
+              <input style={{ width: '50%' }} type="range" min={1} max={5} step={1} value={bloodLevel} onInput={(e) => setValue(e, (val) => setBloodLevel(parseInt(val) as BloodLevel))} />
             </div>
 
             <div className="row">
