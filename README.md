@@ -1,9 +1,9 @@
 # Invisible Title Maker
 Simple tool to create an Invincible TV show inspired title card image.
 
-[insert link here]
+**Link: https://invisible-card.vercel.app**
 
-![screenshot](./img/screenshot.png)
+![screenshot](./public/screenshot.png)
 
 - Write any text in the show-inspired title card format
 - Multiple color themes based on characters
