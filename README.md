@@ -1,6 +1,14 @@
 # Invisible Title Maker
+Simple tool to create an Invincible TV show inspired title card image.
 
-Creates a title card resembling the Invisible TV show.
+[insert link here]
+
+![screenshot](./img/screenshot.png)
+
+- Write any text in the show-inspired title card format
+- Multiple color themes based on characters
+- Randomized blood splatter with adjustable levels
+- Download as PNG
 
 # Credits
 - [Wood Block CG Font](https://www.fontpalace.com/font-download/wood-block-cg/)
