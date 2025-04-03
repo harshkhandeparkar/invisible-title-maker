@@ -82,6 +82,10 @@ export const THEME_MAP = {
 	'Allen': {
 		bg: '#3936ed',
 		text: '#2bffe1'
+	},
+	'Immortal': {
+		bg: '#3c3d53',
+		text: '#e8c856'
 	}
 };
 
