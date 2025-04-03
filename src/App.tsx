@@ -59,7 +59,7 @@ function App() {
 
   return (
     <div className='main'>
-      <svg width="70%" viewBox="0 0 1600 900" className='title' ref={svgRef}>
+      <svg width="60%" viewBox="0 0 1600 900" className='title' ref={svgRef}>
         <defs>
           <style type='text/css'>
             {`
