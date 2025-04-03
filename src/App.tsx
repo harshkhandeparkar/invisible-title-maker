@@ -166,31 +166,29 @@ function App() {
           display={enableSplatter ? 'inherit' : 'none'}
         >
           {
-            FINE_SPLATTERS.map((splatter_img, i) => {
-              return <image
+            !splatterSettings.fullBlood && FINE_SPLATTERS.map((splatter_img, i) => {
+              return i < splatterSettings.fineSplatterLevel ? <image
                 key={i}
                 xlinkHref={splatter_img}
                 width="100%"
                 fill='red'
                 transform={`rotate(${splatterSettings.fineSplatterRotations[0]})`}
                 style={{ transformOrigin: 'center' }}
-                visibility={i < splatterSettings.fineSplatterLevel ? 'visible' : 'hidden'}
-              />;
+              /> : null;
             })
           }
 
           {
-            BIG_SPLATTERS.map((splatter_img, i) => {
-              return <image
+            !splatterSettings.fullBlood && BIG_SPLATTERS.map((splatter_img, i) => {
+              return i < splatterSettings.bigSplatLevel ? <image
                 xlinkHref={splatter_img}
                 width="100%"
                 height="100%"
                 x={splatterSettings.bigSplatDisplacements[i][0]}
                 y={splatterSettings.bigSplatDisplacements[i][1]}
-                visibility={i < splatterSettings.bigSplatLevel ? 'visible' : 'hidden'}
                 transform={`scale(${splatterSettings.bigSplatScale})`}
                 style={{ transformOrigin: 'center' }}
-              />;
+              /> : null;
             })
           }
 
@@ -263,7 +261,7 @@ function App() {
 
             <div className="row">
               <label>Blood Level</label>
-              <input style={{ width: '50%' }} type="range" min={1} max={5} step={1} value={bloodLevel} onInput={(e) => setValue(e, (val) => setBloodLevel(parseInt(val) as BloodLevel))} />
+              <input style={{ width: '50%' }} type="range" min={1} max={6} step={1} value={bloodLevel} onInput={(e) => setValue(e, (val) => setBloodLevel(parseInt(val) as BloodLevel))} />
             </div>
 
             <div className="row">

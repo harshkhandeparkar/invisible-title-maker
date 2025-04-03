@@ -28,13 +28,13 @@ export function generateSplatterSettings(level: BloodLevel): ISplatterSettings {
 	const bigSplatDisplacements = new Array(3).fill([0, 0]).map(() => randomDisplacement(0, 500));
 	const fineSplatterRotations = new Array(3).fill(0).map(() => randomRotation(-10, 10));
 
-	const fullBlood = level === 5;
+	const fullBlood = level === 6;
 
 	return {
 		bigSplatDisplacements,
 		fineSplatterRotations,
 		bigSplatLevel: level - 2,
-		bigSplatScale: (level - 1) / 2,
+		bigSplatScale: (level - 2) / 2,
 		fineSplatterLevel: level,
 		fullBlood
 	}
