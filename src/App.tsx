@@ -28,6 +28,10 @@ const THEME_MAP = {
   'Oliver': {
     text: '#95b38e',
     bg: '#9a004f'
+  },
+  'Allen': {
+    bg: '#3936ed',
+    text: '#2bffe1'
   }
 }
 
