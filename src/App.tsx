@@ -13,7 +13,7 @@ function App() {
 
   const [invisibleFontSize, setInvisibleFontSize] = useState(400);
   const [invisibleDistortion, setInvisibleDistortion] = useState(0.35);
-  const [invisiblePosition, setInvisiblePosition] = useState(33);
+  const [invisiblePosition, setInvisiblePosition] = useState(25);
 
   const [enableSplatter, setEnableSplatter] = useState(false);
   const [splatterOpacity, setSplatterOpacity] = useState(1);
@@ -84,7 +84,7 @@ function App() {
           x="50%"
           y={`${invisiblePosition}%`}
           textAnchor='middle'
-          dominantBaseline='hanging'
+          dominantBaseline='text-before-edge'
           fill={THEME_MAP[theme].text}
           fontFamily='Wood Block CG Regular'
           style={{ fontFamily: 'Wood Block CG Regular' }}
