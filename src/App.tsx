@@ -56,12 +56,12 @@ function App() {
 
   const svgRef = createRef<SVGSVGElement>();
 
-  const setValue = (
-    e: React.FormEvent<HTMLInputElement>,
-    setter: (value: string) => void
+  const setValue = <T extends string>(
+    e: React.FormEvent<HTMLInputElement | HTMLSelectElement>,
+    setter: (value: T) => void
   ) => {
     e.preventDefault();
-    setter(e.currentTarget.value);
+    setter(e.currentTarget.value as T);
   }
 
   const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -232,7 +232,7 @@ function App() {
               <label>Color Theme</label>
               <select
                 value={theme}
-                onChange={(e) => setValue(e, setTheme)}
+                onChange={(e) => setValue<typeof theme>(e, setTheme)}
               >
                 {Object.keys(THEME_MAP).map((theme, i) => {
                   return <option key={i}>
