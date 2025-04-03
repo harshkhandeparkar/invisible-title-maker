@@ -168,13 +168,13 @@ function App() {
         <div className="row">
           <div className="col" style={{ width: '60%' }}>
             <div className="row">
-              <input value={invisible} onInput={(e) => setValue(e, setInvisible)} />
+              <input value={invisible} onInput={(e) => setValue(e, setInvisible)} onFocus={(e) => e.target.select()} />
               <label>Capitalize</label>
               <input type="checkbox" checked={true} readOnly={true} disabled={true} />
             </div>
 
             <div className="row">
-              <input value={based} onInput={(e) => setValue(e, setBased)} />
+              <input value={based} onInput={(e) => setValue(e, setBased)} onFocus={(e) => e.target.select()} />
               <label>Capitalize</label>
               <input type="checkbox" checked={capitalizeBased} onChange={
                 () => setCapitalizeBased((current) => !current)
@@ -182,7 +182,7 @@ function App() {
             </div>
 
             <div className="row">
-              <input value={credits} onInput={(e) => setValue(e, setCredits)} />
+              <input value={credits} onInput={(e) => setValue(e, setCredits)} onFocus={(e) => e.target.select()} />
               <label>Capitalize</label>
               <input type="checkbox" checked={capitalizeCredits} onChange={
                 () => setCapitalizeCredits((current) => !current)

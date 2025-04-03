@@ -1,3 +1,9 @@
+svg {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
 .main {
 	display: flex;
 	flex-direction: column;
@@ -15,15 +21,18 @@
 
 .inputs input {
 	padding: 5px;
-	width: 100%;
+	flex-grow: 1;
 	box-shadow: none;
 	outline: none;
+}
 
+.inputs label {
+	margin-right: 5px;
 }
 
 .inputs .row {
 	display: flex;
-	gap: 1rem;
+	gap: 10px;
 }
 
 .inputs .col {
@@ -34,6 +43,7 @@
 
 .inputs input[type="checkbox"] {
 	width: fit-content;
+	flex-grow: 0;
 }
 
 .inputs .btn {
@@ -57,4 +67,22 @@
 	display: grid;
 	gap: 5px;
 	grid-template-columns: auto auto auto;
+}
+
+@media only screen and (max-width: 850px) {
+	.inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+
+		width: 90%;
+	}
+
+	.inputs .col {
+		width: 100% !important;
+	}
+
+	.inputs .row {
+		flex-wrap: wrap;
+	}
 }
