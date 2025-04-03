@@ -2,38 +2,7 @@ import { createRef, useEffect, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
 import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
-import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings, getDistortedFontSize } from './utils';
-
-const THEME_MAP = {
-  'Invisible': {
-    bg: '#189ff9',
-    text: '#fcec01'
-  },
-  'Invisible Dark': {
-    bg: '#189ff9',
-    text: 'black'
-  },
-  'Atom Eve': {
-    bg: '#eb607a',
-    text: '#f3cad2'
-  },
-  'Rex Splode': {
-    bg: '#ba3e1c',
-    text: '#ecf76f'
-  },
-  'Omni Man': {
-    bg: '#e1ebed',
-    text: '#ca4230'
-  },
-  'Oliver': {
-    text: '#95b38e',
-    bg: '#9a004f'
-  },
-  'Allen': {
-    bg: '#3936ed',
-    text: '#2bffe1'
-  }
-}
+import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings, getDistortedFontSize, Theme, THEME_MAP } from './utils';
 
 function App() {
   const [invisible, setInvisible] = useState('invisible');
@@ -51,7 +20,7 @@ function App() {
   const [bloodLevel, setBloodLevel] = useState<BloodLevel>(3);
   const [splatterSettings, setSplatterSettings] = useState(generateSplatterSettings(bloodLevel));
 
-  const [theme, setTheme] = useState<keyof typeof THEME_MAP>('Invisible');
+  const [theme, setTheme] = useState<Theme>('Invisible');
 
   const onRegen = () => {
     setSplatterSettings(generateSplatterSettings(bloodLevel));
@@ -276,7 +245,7 @@ function App() {
               <div className="col">
                 <div className="theme-btn-grid">
                   {Object.keys(THEME_MAP).map((themeName, i) => {
-                    const btnTheme = THEME_MAP[themeName as keyof typeof THEME_MAP];
+                    const btnTheme = THEME_MAP[themeName as Theme];
 
                     return <button
                       key={i}
@@ -287,7 +256,7 @@ function App() {
                       className={`theme-select-btn ${theme === themeName ? 'selected' : ''}`}
                       onClick={(e) => {
                         e.preventDefault();
-                        setTheme(themeName as keyof typeof THEME_MAP);
+                        setTheme(themeName as Theme);
                       }}
                     >
                       {themeName}

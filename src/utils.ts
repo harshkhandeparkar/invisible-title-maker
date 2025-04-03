@@ -53,3 +53,36 @@ export function getDistortedFontSize(fontSize: number, distortion: number, charI
 
 	return fontSize - y;
 }
+
+export const THEME_MAP = {
+	'Invisible': {
+		bg: '#189ff9',
+		text: '#fcec01'
+	},
+	'Invisible Dark': {
+		bg: '#189ff9',
+		text: 'black'
+	},
+	'Atom Eve': {
+		bg: '#eb607a',
+		text: '#f3cad2'
+	},
+	'Rex Splode': {
+		bg: '#ba3e1c',
+		text: '#ecf76f'
+	},
+	'Omni Man': {
+		bg: '#e1ebed',
+		text: '#ca4230'
+	},
+	'Oliver': {
+		text: '#95b38e',
+		bg: '#9a004f'
+	},
+	'Allen': {
+		bg: '#3936ed',
+		text: '#2bffe1'
+	}
+};
+
+export type Theme = keyof typeof THEME_MAP;
