@@ -1,8 +1,8 @@
 import { createRef, useEffect, useState } from 'react';
 import { SVGSaver } from 'svgsaver-reboot/src/index.ts';
 
-import { BG_B64, FINE_SPLATTER_2_B64, FINE_SPLATTER_3_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64, SPLATTER_B64_2, SPLATTER_B64_3 } from './assets/base64';
-import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings, randomDisplacement, randomRotation } from './blood';
+import { BG_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, SPLATTER_B64 } from './assets/base64';
+import { BIG_SPLATTERS, BloodLevel, FINE_SPLATTERS, generateSplatterSettings } from './utils';
 
 const THEME_MAP = {
   'Invisible': {
@@ -48,7 +48,7 @@ function App() {
 
   const [enableSplatter, setEnableSplatter] = useState(false);
   const [splatterOpacity, setSplatterOpacity] = useState(1);
-  const [bloodLevel, setBloodLevel] = useState<BloodLevel>(2);
+  const [bloodLevel, setBloodLevel] = useState<BloodLevel>(3);
   const [splatterSettings, setSplatterSettings] = useState(generateSplatterSettings(bloodLevel));
 
   const [theme, setTheme] = useState<keyof typeof THEME_MAP>('Invisible');
