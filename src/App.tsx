@@ -5,27 +5,27 @@ import { BG_B64, FINE_SPLATTER_B64, INVISIBLE_FONT_B64, NORMAL_TITLE_FONT_B64, S
 import { randomDisplacement } from './blood';
 
 const THEME_MAP = {
-  'invisible': {
+  'Invisible': {
     bg: '#189ff9',
     text: '#fcec01'
   },
-  'invisible-dark': {
+  'Invisible Dark': {
     bg: '#189ff9',
     text: 'black'
   },
-  'atomeve': {
+  'Atom Eve': {
     bg: '#eb607a',
     text: '#f3cad2'
   },
-  'rexsplode': {
+  'Rex Splode': {
     bg: '#ba3e1c',
     text: '#ecf76f'
   },
-  'omni-man': {
+  'Omni Man': {
     bg: '#e1ebed',
     text: '#ca4230'
   },
-  'oliver': {
+  'Oliver': {
     text: '#95b38e',
     bg: '#9a004f'
   }
@@ -47,7 +47,7 @@ function App() {
   const [invisibleDistortion, setInvisibleDistortion] = useState(0.35);
   const [invisiblePosition, setInvisiblePosition] = useState(33);
 
-  const [theme, setTheme] = useState<keyof typeof THEME_MAP>('invisible');
+  const [theme, setTheme] = useState<keyof typeof THEME_MAP>('Invisible');
 
   const onRegen = () => {
     setCentralSplatterTranslate(randomDisplacement(0, 300));
@@ -166,7 +166,7 @@ function App() {
 
       <div className="inputs">
         <div className="row">
-          <div className="col" style={{ width: '50%', borderRight: '1px solid black', paddingRight: '5px' }}>
+          <div className="col" style={{ width: '60%' }}>
             <div className="row">
               <input value={invisible} onInput={(e) => setValue(e, setInvisible)} />
               <label>Capitalize</label>
@@ -190,7 +190,7 @@ function App() {
             </div>
           </div>
 
-          <div className="col" style={{ width: '50%' }}>
+          <div className="col" style={{ width: '40%' }}>
             <div className="row">
               <label>Title Font Size</label>
               <input style={{ width: '40%' }} type="range" min={100} max={500} step={5} value={invisibleFontSize} onInput={(e) => setValue(e, (val) => setInvisibleFontSize(parseFloat(val)))} />
@@ -211,7 +211,7 @@ function App() {
         <hr style={{ width: '100%' }} />
 
         <div className="row">
-          <div className="col" style={{ width: '50%' }}>
+          <div className="col" style={{ width: '40%' }}>
             <div className="row">
               <label>Blood Splatter</label>
               <input type="checkbox" checked={enableSplatter} onChange={
@@ -224,22 +224,39 @@ function App() {
               <input style={{ width: '50%' }} type="range" min={0} max={1} step={0.02} value={splatterOpacity} onInput={(e) => setValue(e, (val) => setSplatterOpacity(parseFloat(val)))} />
             </div>
 
-            <button onClick={onRegen}>Regenerate Splatter</button>
+            <div className="row">
+              <button onClick={onRegen}>Regenerate Splatter</button>
+            </div>
           </div>
 
           <div className="col">
             <div className="row">
-              <label>Color Theme</label>
-              <select
-                value={theme}
-                onChange={(e) => setValue<typeof theme>(e, setTheme)}
-              >
-                {Object.keys(THEME_MAP).map((theme, i) => {
-                  return <option key={i}>
-                    {theme}
-                  </option>
-                })}
-              </select>
+              <div className="col">
+                <label>Color Theme</label>
+              </div>
+
+              <div className="col">
+                <div className="theme-btn-grid">
+                  {Object.keys(THEME_MAP).map((themeName, i) => {
+                    const btnTheme = THEME_MAP[themeName as keyof typeof THEME_MAP];
+
+                    return <button
+                      key={i}
+                      style={{
+                        backgroundColor: btnTheme.bg,
+                        color: btnTheme.text,
+                      }}
+                      className={`theme-select-btn ${theme === themeName ? 'selected' : ''}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setTheme(themeName as keyof typeof THEME_MAP);
+                      }}
+                    >
+                      {themeName}
+                    </button>
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

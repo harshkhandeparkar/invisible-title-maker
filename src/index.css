@@ -8,7 +8,7 @@
 .inputs {
 	display: flex;
 	flex-direction: column;
-		gap: 5px;
+	gap: 5px;
 
 	width: 60%;
 }
@@ -20,10 +20,12 @@
 	outline: none;
 
 }
+
 .inputs .row {
 	display: flex;
 	gap: 1rem;
 }
+
 .inputs .col {
 	display: flex;
 	flex-direction: column;
@@ -37,4 +39,23 @@
 .inputs #dl-btn {
 	width: 5rem;
 	height: 2rem;
+}
+
+.inputs .theme-select-btn {
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+
+	font-family: 'Wood Block CG Regular';
+	font-size: 1.5rem;
+}
+
+.inputs .theme-select-btn:hover, .inputs .theme-select-btn.selected {
+	outline: 2px solid black;
+}
+
+.inputs .theme-btn-grid {
+	display: grid;
+	gap: 5px;
+	grid-template-columns: auto auto auto;
 }
