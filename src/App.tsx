@@ -12,7 +12,7 @@ function App() {
   const [capitalizeCredits, setCapitalizeCredits] = useState(false);
 
   const [invisibleFontSize, setInvisibleFontSize] = useState(400);
-  const [invisibleDistortion, setInvisibleDistortion] = useState(0.35);
+  const [invisibleDistortion, setInvisibleDistortion] = useState(0.2);
   const [invisiblePosition, setInvisiblePosition] = useState(25);
 
   const [enableSplatter, setEnableSplatter] = useState(false);
