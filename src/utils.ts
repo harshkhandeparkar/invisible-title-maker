@@ -82,8 +82,12 @@ export const THEME_MAP = {
 		text: '#ca4230'
 	},
 	'Oliver': {
-		text: '#95b38e',
-		bg: '#9a004f'
+		text: '#e4db95',
+		bg: '#d0024f'
+	},
+	'Oliver S4': {
+		text: '#232e34',
+		bg: '#ed0038'
 	},
 	'Allen': {
 		bg: '#3936ed',
